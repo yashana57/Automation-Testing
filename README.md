@@ -4,14 +4,13 @@ Automated test suite for a simple web application with a focus on the login and 
 # Prerequisites:
 # 1)Python Installation:
 Make sure you have Python installed. You can download it from Python's official website.
-# 2)WebDriver Installation:
-Download the appropriate WebDriver for your browser (e.g., ChromeDriver for Google Chrome).
-Ensure the WebDriver executable is in your system's PATH or in the same directory as your test script.
+# 2)WebDriver Installation
+Chrome driver installation is handled by ChromeDriverManager via automation
 
 # Project: 
-The project contains 4 packages named pageObjects, testcases, utility and reports
+The project contains 4 packages named src, testcases, utility and reports
 
-# 1)pageObjects:
+# 1)src:
 This package conatins the page object model of Login page and dashboard page named as loginPage.py and Dashboard.py respectively.
 # 2)testcases:
 This package conatins the automated test scripts for Login page and Dashboard page names as loginTest.py and dashboard_test.py respectively.
