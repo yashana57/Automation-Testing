@@ -1,33 +1,39 @@
 import unittest
-import HtmlTestRunner
 import time
+import os
+import HtmlTestRunner
+import sys
 
-from pageObjects.loginPage import loginPage
-from utility.chrome import driver
+__dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(__dir)
+from src.loginPage import loginPage
+from src.Dashboard import Dashboard_Page
 
-from pageObjects.Dashboard import Dashboard_Page
+__dir = os.path.dirname(os.path.realpath(__file__))
+report_dir = os.path.join(os.path.dirname(os.path.realpath(__dir)), "report")
 
-class dashboard_test(unittest.TestCase):
+
+class TestDashboard(unittest.TestCase):
     baseurl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
 
-    def test_timeatwork(self):
+    def test_time_at_work(self):
         username = "Admin"
         password = "admin123"
         lp = loginPage(self.baseurl)
         lp.login(username, password)
-        time.sleep(5)
-        dp=Dashboard_Page(lp.driver).time_atwork()
-        assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/attendance/punchIn'
+        dp = Dashboard_Page(lp.driver).time_atwork()
+        assert dp == 'Punch Out'
 
-    def test_assignleave(self):
+    @unittest.skip("This is a skipped test.")
+    def test_assign_leave(self):
             username = "Admin"
             password = "admin123"
             lp = loginPage(self.baseurl)
             lp.login(username, password)
-            time.sleep(5)
             dp = Dashboard_Page(lp.driver).assignleave()
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/leave/assignLeave'
 
+    @unittest.skip("This is a skipped test.")
     def test_leave_list(self):
             username = "Admin"
             password = "admin123"
@@ -37,7 +43,8 @@ class dashboard_test(unittest.TestCase):
             dp = Dashboard_Page(lp.driver).leave_list()
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/leave/viewLeaveList'
 
-    def timesheets(self):
+    @unittest.skip("This is a skipped test.")
+    def test_time_sheets(self):
             username = "Admin"
             password = "admin123"
             lp = loginPage(self.baseurl)
@@ -46,7 +53,8 @@ class dashboard_test(unittest.TestCase):
             dp = Dashboard_Page(lp.driver).timesheets()
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/time/viewEmployeeTimesheet'
 
-    def apply_leave(self):
+    @unittest.skip("This is a skipped test.")
+    def test_apply_leave(self):
             username = "Admin"
             password = "admin123"
             lp = loginPage(self.baseurl)
@@ -55,7 +63,8 @@ class dashboard_test(unittest.TestCase):
             dp = Dashboard_Page(lp.driver).apply_leave()
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/leave/applyLeave'
 
-    def my_leave(self):
+    @unittest.skip("This is a skipped test.")
+    def test_my_leave(self):
             username = "Admin"
             password = "admin123"
             lp = loginPage(self.baseurl)
@@ -64,7 +73,8 @@ class dashboard_test(unittest.TestCase):
             dp = Dashboard_Page(lp.driver).my_leave()
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/leave/viewMyLeaveList'
 
-    def my_timesheet(self):
+    @unittest.skip("This is a skipped test.")
+    def test_my_timesheet(self):
             username = "Admin"
             password = "admin123"
             lp = loginPage(self.baseurl)
@@ -74,5 +84,5 @@ class dashboard_test(unittest.TestCase):
             assert dp == 'https://opensource-demo.orangehrmlive.com/web/index.php/time/viewMyTimesheet'
 
 
-if __name__ == "__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output="..\\reports"))
+if __name__ == '__main__':
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=report_dir))

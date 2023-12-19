@@ -1,39 +1,52 @@
 import unittest
 import HtmlTestRunner
-import time
-from utility.chrome import driver
-from pageObjects.loginPage import loginPage
+from parameterized import parameterized
+import os
+import sys
 
-class loginTest(unittest.TestCase):
-    baseurl="https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+__dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(__dir)
+from src.loginPage import loginPage
 
-    def test_validlogin(self):
-        #To create object for loginPage
+
+__dir = os.path.dirname(os.path.realpath(__file__))
+report_dir = os.path.join(os.path.dirname(os.path.realpath(__dir)), "report")
+
+
+class TestLogin(unittest.TestCase):
+    baseurl = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+
+    def test_valid_login(self):
+        # To create object for loginPage
         username = "Admin"
         password = "admin123"
-        lp=loginPage(self.baseurl)
+        lp = loginPage(self.baseurl)
         lp.login(username, password)
-        time.sleep(5)
-        # self.assertEqual("dashboard/index",self.driver.title,"webpage title NOT matching")
+        assert lp.driver.current_url == 'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index'
 
-    def test_invalidlogin(self):
-        #To create object for loginPage
-        username = "Admn"
-        password = "admn123"
-        lp=loginPage(self.baseurl)
-        lp.invalidlogin(username, password)
-        time.sleep(5)
+    @parameterized.expand([("UserAdmin1", "passadmin"), ("UserAdmin2", "passadmin2")])
+    def test_invalid_login(self, username_, password_):
+        lp = loginPage(self.baseurl)
+        res = lp.login(username_, password_)
+        assert res == 'Invalid credentials'
 
-    def test_emptylogin(self):
-        #To create object for loginPage
-        lp=loginPage(self.baseurl)
-        lp.emptylogin()
-        time.sleep(5)
-
-    # @classmethod
-    # def tearDownClass(cls):
-    #     cls.driver.quit()
+    def test_empty_login(self):
+        lp = loginPage(self.baseurl)
+        res = lp.login(' ', ' ')
+        assert res == 'Username and password is Required'
 
 
-if __name__=="__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output="..\\reports"))
+def Suite():
+
+    # define a unit test container
+    suiteTest = unittest.TestSuite()
+
+    # add test cases to the container
+    suiteTest.addTest(TestLogin("test_empty_login"))
+    suiteTest.addTest(TestLogin("test_invalid_login"))
+    suiteTest.addTest(TestLogin("test_valid_login"))
+    return suiteTest
+
+
+if __name__ == '__main__':
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=report_dir))
