@@ -6,6 +6,9 @@ Automated test suite for a simple web application with a focus on the login and 
 Make sure you have Python installed. You can download it from Python's official website.
 # 2)WebDriver Installation
 Chrome driver installation is handled by ChromeDriverManager via automation
+# 3)To install the packages:
+Run below command
+>pip install --no-cache-dir -r requirement.txt
 
 # Project: 
 The project contains 4 packages named src, testcases, utility and reports

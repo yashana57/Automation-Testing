@@ -3,3 +3,4 @@ parameterized
 selenium
 unittest2
 unittest-xml-reporting
+webdriver_manager

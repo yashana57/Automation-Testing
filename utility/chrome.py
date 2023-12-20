@@ -6,7 +6,7 @@ global driver
 
 def driver(baseurl):
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    driver.implicitly_wait(20)
+    driver.implicitly_wait(10)
     driver.maximize_window()
     driver.get(baseurl)
     driver.implicitly_wait(10)
